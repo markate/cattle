@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/css/css.css'/>
+  </head>
+  <body class="container">
+    <div ng-view></div>
+    <div class ="cover" ng-show="">
+      <div class="progress">
+         <div class="bar" style="width: 60%;"></div>
+      </div>
+    </div>
+    <script src="/js/lib.js"></script>
+    <script src="/js/lib/require.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/platform/app.js"></script>
+  </body>
+</html>

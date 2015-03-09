@@ -1,0 +1,59 @@
+<div ng-controller="ProjectList">
+<h1 class="title bottom-padding"><span>{{title}}</span><span class="pull-right j_login_name">{{loginName}}</span></h1>
+<h5 class="title bottom-padding"> 
+  <span class="col-md-2"> <input class="form-control" type="search" ng-model="id" name="进程id" placeholder="pm2的进程id"/></span> 
+  <span class="col-md-2"> <input class="form-control" type="search" ng-model="project" name="project" placeholder="项目名称"/></span> 
+  <span class="col-md-2"><input type="search" name="name" ng-model="searchName" placeholder="姓名" class="form-control"/></span>
+
+  <span class="col-md-2"><a style="line-height:30px;" href="/#/note">使用说明</a></span>
+</h5>
+<h3 class="bottom-padding"></h3>
+<div class="channel_manager">
+ <table class="table bottom-padding">
+      <thead>
+          <th >
+              进程名称
+          </th>
+          <th >
+              项目名称
+          </th>
+          <th>项目所有者</th>
+          <th>
+             立项时间
+          </th>
+           <th>
+             项目操作
+          </th>
+      </thead> 
+      <tr ng-repeat="a in projectList | filter:{name: project, owner: searchName,id:id}">
+          <td >
+              <a class="title pull-left">{{a.id}}</a>
+          </td>
+          <td >
+              <a class="title pull-left">{{a.name}}</a>
+          </td>
+          <td>{{a.owner}}</td>
+          <td>
+             <span class="pull-left">{{a.createTime | date: 'yyyy-MM-dd' }}</span>
+          </td>
+           <td>
+             <a class="btn btn-warning" disabled="disabled">部署</a>
+             <a class="btn btn-info">删除</a>
+             <a class="btn btn-info">重启进程</a>
+             <a class="btn btn-info">自动化测试</a>
+             <a class="btn btn-info">提测</a>
+             <a class="btn btn-info">日志查看</a>
+             <a class="btn btn-info" href="http://cp01-rdqa04-dev111.cp01.baidu.com:{{a.port}}">RD环境预览</a>
+             <a class="btn btn-info">QA环境预览</a>
+          </td>
+      </tr>
+      
+      <tr>
+          <td colspan="5">
+              <input type="button" class="btn btn-primary j_create" value="创建项目" ng-click="createPro()">
+          </td>
+      </tr>
+    </table>
+</div>
+<create-project></create-project>
+</div>
