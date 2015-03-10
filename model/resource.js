@@ -1,4 +1,4 @@
-{
+module.exports = {
 	user:{
 		name:{
 			len:"",
@@ -14,7 +14,7 @@
 			len:"",
 			checked:"这里是个正则",
 			required:true
-		}
+		},
 		/*在用户提交之前的动作钩子*/
 		beforeAddHook:function([],func){
 			
@@ -77,7 +77,7 @@
 		}
 	}
 
-}
+};
 
 
 
