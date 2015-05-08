@@ -1,33 +1,29 @@
-var express = require('express');
-var favicon = require('serve-favicon');
-var log = require('./service/' + 'logger');  
-var path = require('path');  
-
-var fs = require('fs');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var app = express();
-
-var routes = require('./routes' +'/index');
-
-
-//set up log
-log.use(app); 
-var logger = log.logger;  
-// view engine setup
+/*
+* 这是cattle的入口文件
+*/
+var express = require('express'),
+    app = express(),
+    favicon = require('serve-favicon'),
+    path = require('path'), 
+    fs = require('fs'), 
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    setting = require('./' + 'setting'),
+    route = require('./' + 'route'),
+    logger = require('./service/' + 'logger');  
+var multipart = require('connect-multiparty');
+app.use(multipart());
+require('./' + 'model');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-// create a write stream (in append mode)
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
+/*使用日志模块log4js进行access日志的接收*/
+logger.use(app);
+app.use(route());
+/*数据模型注入，放入process中作为数据模型使用*/
 
 
 // catch 404 and forward to error handler
@@ -36,10 +32,6 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-
-// error handlers
-
-// development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
@@ -62,4 +54,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.listen(8999);
+app.listen(setting.port?setting.port:80);

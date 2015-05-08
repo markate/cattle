@@ -1,4 +1,8 @@
+// /*
+// *    这是cattle的日志模块，使用的是log4js
+// */
 var log4js = require('log4js');  
+/*log4js配置日志模块*/
 log4js.configure({  
     appenders: [  
         {  
@@ -7,26 +11,47 @@ log4js.configure({
         }, //控制台输出  
         {  
             type: "dateFile",  
-            filename: './log/log.log',  
+            filename: './log/accecc_log.log',  
             pattern: "_yyyy-MM-dd",  
             alwaysIncludePattern: false,  
-            category: 'dateFileLog'  
-        }//日期文件格式  
+            category: 'access_log'  
+        },//日期文件格式
+        {
+            type: "dateFile",  
+            filename: './log/warming_log.log',  
+            pattern: "_yyyy-MM-dd",  
+            alwaysIncludePattern: false,  
+            category: 'warming_log',
+            format:':method :url'  
+        },
+        {
+            type: "dateFile",  
+            filename: './log/error_log.log',  
+            pattern: "_yyyy-MM-dd",  
+            alwaysIncludePattern: false,  
+            category: 'error_log'  
+        }    
     ],  
     replaceConsole: true,   //替换console.log  
-    levels:{  
-        dateFileLog: 'INFO'  
-    }  
+    levels:{   
+        "access_log":'INFO',
+        "warming_log":'INFO',
+        "error_log":'INFO'
+    }   
 });  
-  
-var dateFileLog = log4js.getLogger('dateFileLog');  
-  
-exports.logger = dateFileLog;  
-  
-exports.use = function(app) {  
-    //页面请求日志,用auto的话,默认级别是WARN  
-    //app.use(log4js.connectLogger(dateFileLog, {level:'auto', format:':method :url'}));  
-    app.use(log4js.connectLogger(dateFileLog, {level:'debug', format:':method :url'}));  
-}  
+var accessLog = log4js.getLogger('access_log');  
+var warnLog = log4js.getLogger('warming_log');
+var errorLog = log4js.getLogger('error_log');
+var log = {
+    accessLog:accessLog,
+    warnLog:warnLog,
+    errorLog:errorLog,
+    use:function(app){ 
+        app.use(log4js.connectLogger(accessLog, {level:log4js.levels.INFO, format:':method :url'}));  
+    }
+}; 
+process.logger = log; 
+module.exports = log;
 
-process.logger = module.exports;
+
+
