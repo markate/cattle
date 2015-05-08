@@ -1,0 +1,29 @@
+<div class="create_project" ng-show='createDisplay'>
+    <div class="create_project_inner">
+	 <form style="margin:40px 80px 40px 80px;" ng-submit="createAction()">
+	  <div class="form-group">
+	    <label for="projectName">项目名称</label>
+	    <input type="text" class="form-control" ng-model="createFormData.name" placeholder="项目名称" required>
+	  </div>
+	  <div class="form-group">
+	    <label for="projectName">项目简介(非必需)</label>
+	    <input type="text" class="form-control" ng-model="createFormData.des" placeholder="项目简介">
+	  </div>
+	  <div class="form-group">
+	    <label for="projectName">模块路劲(非必须)</label>
+	    <input type="text" class="form-control" ng-model="createFormData.modular" placeholder="模块路劲">
+	  </div>
+	  <div class="checkbox">
+	    <label>
+	      <input type="radio" ng-model="createFormData.type" value="NodeJs" required> NodeJs
+	    </label>
+	     <label>
+	      <input type="radio" ng-model="createFormData.type" value="PHP" disabled="disabled" required> PHP
+	    </label>
+	  </div>
+	  <button type="submit" class="btn btn-primary">提交</button>
+	</form>
+		<div class ="close" ng-click="closeProjectWindow()"></div>
+    </div>
+</div>
+

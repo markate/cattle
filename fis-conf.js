@@ -1,0 +1,41 @@
+fis.config.set('project.charset', 'utf-8');
+fis.config.merge({
+	roadmap:{
+		path:[
+			{
+				reg:'map.json',
+				release:'/map.json'
+			},
+			{
+				reg:'*.do',
+				release:false
+			}
+		]
+	},
+	pack:{
+		'/public/js/lib.js':[
+			'/public/js/lib/jquery.js',
+			'/public/js/lib/angular.min.js',
+			'/public/js/lib/angular-route.min.js'
+		],
+		'/public/js/common.js':[
+			/public\/js\/common\/.*\.js/
+		],
+		'/public/css/css.css':[
+			/public\/css\/.*\.css/,
+			/public\/directives\/.*\.css/,
+			/public\/.*\/directives\/.*\.css/,
+			/public\/.*\/template\/.*\.css/
+		],
+	},
+	deploy:{
+		dev:{
+			receiver:'http://cp01-rdqa04-dev111.cp01.baidu.com:8085/receiver',
+			to:'/home/users/suhongtang/cloudaPlatform/cattle/'
+		},
+		local:{
+			to:"out"
+		}
+
+	}
+});
